@@ -5,6 +5,9 @@ echo $this->Html->script('/tiny_admin/aloha/lib/aloha.js', array(
 	'data-aloha-plugins' => 
 		'common/ui,
 		common/format,
+		common/list,
+		common/table,
+		common/image,
 		common/highlighteditables,
 		common/link'
 ));
