@@ -8,12 +8,22 @@ echo $this->Html->script('/tiny_admin/aloha/lib/aloha.js', array(
 		common/list,
 		common/table,
 		common/image,
+		common/autoparagraph,
+		common/undo,
 		common/highlighteditables,
 		common/link'
 ));
 $scriptBlock = <<<EOT
 Aloha.ready( function() {
 	Aloha.jQuery('%s').aloha();
+
+	$('.aloha img').live('dblclick', function(event) {
+		if (confirm("Are you sure you want to delete this image?")) {
+			event.preventDefault();
+			$(this).remove();
+		}
+		return false;
+	});
 
 	Aloha.bind('aloha-editable-deactivated', function(event, editable) {
 		$.ajax({
