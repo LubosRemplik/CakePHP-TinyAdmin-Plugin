@@ -10,7 +10,7 @@ class AdminComponent extends Component {
 		// load helpers
 		$controller->helpers[] = 'TinyAdmin.Parser';
 		if ($this->Session->check('Auth.User.id')) {
-			$controller->helpers[] = 'TinyAdmin.Toolbar';
+			$controller->helpers[] = 'TinyAdmin.Admin';
 		}
 	}
 }
