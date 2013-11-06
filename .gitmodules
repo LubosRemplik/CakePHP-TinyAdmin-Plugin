@@ -1,0 +1,3 @@
+[submodule "Vendor/phpquery"]
+	path = Vendor/phpquery
+	url = https://github.com/TobiaszCudnik/phpquery

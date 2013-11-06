@@ -23,7 +23,8 @@ class AuthController extends AppController {
 					'fields' => array('username' => 'email'),
 				)
 			)
-		)
+		),
+		'Session',
 	);
 
 	public function login() {
