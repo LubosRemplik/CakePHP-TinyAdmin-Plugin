@@ -1,0 +1,9 @@
+<?php
+$config['TinyAdmin']['superadmin'] = array(
+	'email' => 'lubos@example.com',
+	'password' => 'tinyadmin'
+);
+$config['TinyAdmin']['domIDs'] = array('content');
+$config['TinyAdmin']['blacklist'] = array(
+	array('plugin' => 'tiny_admin', 'controller' => 'auth', 'action' => 'login')
+);

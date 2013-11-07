@@ -1,4 +1,2 @@
 <?php
-Configure::write('TinyAdmin.domIDs', array(
-	'content',
-));
+Configure::load('TinyAdmin.config', 'default', true);
