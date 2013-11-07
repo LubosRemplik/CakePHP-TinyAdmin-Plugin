@@ -9,7 +9,7 @@ class AdminComponent extends Component {
 	public function beforeRender(Controller $controller) {
 		// load helpers
 		$controller->helpers[] = 'TinyAdmin.Parser';
-		if ($this->Session->check('Auth.User.id')) {
+		if ($this->Session->check('Auth.User.email')) {
 			$controller->helpers[] = 'TinyAdmin.Admin';
 		}
 	}

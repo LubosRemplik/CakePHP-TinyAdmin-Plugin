@@ -17,14 +17,14 @@ class AuthController extends AppController {
 			'loginRedirect' => '/',
 			'logoutRedirect' => '/',
 			'authenticate' => array(
-				'Form' => array(
+				'TinyAdmin.Admin' => array(
 					'userModel' => 'TinyAdmin.User',
 					'passwordHasher' => 'Blowfish',
 					'fields' => array('username' => 'email'),
 				)
 			)
 		),
-		'Session',
+		'Twbs.BootstrapSession',
 	);
 
 	public function login() {
@@ -32,12 +32,12 @@ class AuthController extends AppController {
 			if ($this->Auth->login()) {
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash(__d(
-					'tiny_admin', 
-					'Email or password is incorrect'
-				));
+				$message = __d('tiny_admin', 'Email or password is incorrect');
+				$options = array('class' => 'col-md-9 col-md-offset-3');
+				$this->BootstrapSession->flash($message, 'danger', $options);
 			}
 		}
+		$this->set('title_for_layout', 'User login');
 	}
 
 	public function logout() {
