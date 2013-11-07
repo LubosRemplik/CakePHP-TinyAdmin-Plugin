@@ -1,6 +1,19 @@
 <?php
 $this->append('script');
 echo $this->Html->script('/tiny_admin/aloha/lib/require.js');
+$scriptBlock = <<<EOT
+var Aloha = window.Aloha || ( window.Aloha = {} );
+
+Aloha.settings = {
+	locale: 'en',
+	plugins: {
+		format: {
+			config : ['b', 'i', 'del', 'sub', 'sup', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat']
+		}
+	}
+};
+EOT;
+echo $this->Html->scriptBlock($scriptBlock);
 echo $this->Html->script('/tiny_admin/aloha/lib/aloha.js', array(
 	'data-aloha-plugins' => 
 		'common/ui,
@@ -17,6 +30,7 @@ $scriptBlock = <<<EOT
 Aloha.ready( function() {
 	Aloha.jQuery('%s').aloha();
 
+	// images deletion
 	$('.aloha img').live('dblclick', function(event) {
 		if (confirm("Are you sure you want to delete this image?")) {
 			event.preventDefault();
@@ -25,6 +39,7 @@ Aloha.ready( function() {
 		return false;
 	});
 
+	// saving data
 	Aloha.bind('aloha-editable-deactivated', function(event, editable) {
 		$.ajax({
 			type: "POST",
