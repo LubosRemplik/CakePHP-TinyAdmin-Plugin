@@ -1,8 +1,8 @@
 <?php
-App::uses('AppHelper', 'View/Helper');
+App::uses('TinyAdminAppHelper', 'TinyAdmin.View/Helper');
 App::import('Vendor', 'TinyAdmin.phpquery/phpQuery/phpQuery');
 
-class ParserHelper extends AppHelper {
+class ParserHelper extends TinyAdminAppHelper {
 
 	public $helpers = array(
 		'Html'
@@ -10,6 +10,9 @@ class ParserHelper extends AppHelper {
 
 	public function afterLayout($layoutFile) {
 		$view = $this->_View;
+		if ($this->_inBlacklist()) {
+			return;
+		}
 		$url = str_replace($this->request->base, '', $this->request->here);
 		$blocks = ClassRegistry::init('TinyAdmin.Block')->find('all', array(
 			'fields' => array('id', 'dom_id', 'content', 'created'),
