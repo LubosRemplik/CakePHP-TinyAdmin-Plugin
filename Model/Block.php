@@ -1,7 +1,7 @@
 <?php
-App::uses('AppModel', 'Model');
+App::uses('TinyAdminAppModel', 'TinyAdmin.Model');
 
-class Block extends AppModel {
+class Block extends TinyAdminAppModel {
 	
 	public $actsAs = array(
 		'Containable'

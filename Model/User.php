@@ -1,8 +1,8 @@
 <?php
-App::uses('AppModel', 'Model');
+App::uses('TinyAdminAppModel', 'TinyAdmin.Model');
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 
-class User extends AppModel {
+class User extends TinyAdminAppModel {
 	
 	public $actsAs = array(
 		'Containable'
