@@ -1,5 +1,7 @@
 <?php
 $this->append('script');
+echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
+echo $this->Html->script('/tiny_admin/js/tiny_admin.js');
 echo $this->Html->script('/tiny_admin/aloha/lib/require.js');
 $scriptBlock = <<<EOT
 var Aloha = window.Aloha || ( window.Aloha = {} );
@@ -39,16 +41,41 @@ Aloha.ready( function() {
 		return false;
 	});
 
+	// activate save & publish button
+	Aloha.bind('aloha-editable-activated', function(event, editable) {
+		$('.ta-toolbar .save')
+			.removeAttr('disabled')
+			.addClass('btn-success')
+			.removeClass('btn-default')
+			;
+		
+		$('.ta-toolbar .cancel').show();
+	});
+
 	// saving data
-	Aloha.bind('aloha-editable-deactivated', function(event, editable) {
+	$('.ta-toolbar .save').click(function(e) {
+		e.preventDefault();
+		var data = {};
+		$.each(Aloha.editables, function(key, value ) {
+			data[key] = {
+				url: '%s',
+				dom_id: value.obj[0].id,
+				content: value.getContents()
+			}
+		});
 		$.ajax({
 			type: "POST",
 			url: "%s",
-			data: {
-				dom_id: Aloha.activeEditable.obj[0].id,
-				url: '%s', 
-				content: Aloha.activeEditable.getContents()
-			}
+			data: data 
+		}).done(function() {
+			
+			$('.ta-toolbar .save')
+				.attr('disabled', 'disabled')
+				.addClass('btn-default')
+				.removeClass('btn-success')
+				;
+			
+			$('.ta-toolbar .cancel').hide();
 		});
 	}); 
 });
@@ -64,6 +91,6 @@ $requestUrl = Router::url(array(
 	'plugin' => 'tiny_admin', 'controller' => 'blocks', 
 	'action' => 'save'
 ));
-$scriptBlock = sprintf($scriptBlock, $selectors, $requestUrl, $url);
+$scriptBlock = sprintf($scriptBlock, $selectors, $url, $requestUrl);
 echo $this->Html->scriptBlock($scriptBlock);
 $this->end();
