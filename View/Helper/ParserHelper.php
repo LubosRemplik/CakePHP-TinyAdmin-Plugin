@@ -13,25 +13,9 @@ class ParserHelper extends TinyAdminAppHelper {
 		if ($this->_inBlacklist()) {
 			return;
 		}
-		$url = str_replace($this->request->base, '', $this->request->here);
-		$blocks = ClassRegistry::init('TinyAdmin.Block')->find('all', array(
-			'fields' => array('id', 'url', 'dom_id', 'content', 'created'),
-			'conditions' => array('url' => $url),
-			'order' => array('created' => 'desc'),
-			'contain' => false
-		));
-		if (!empty($blocks)) {
+		if (!empty($this->_View->viewVars['blocks'])) {
 			$doc = phpQuery::newDocument($view->output);
-			$parse = $alreadyIn = array();
-			foreach ($blocks as $block) {
-				$block = $block['Block'];
-				if (!in_array(array($block['url'], $block['dom_id']), $alreadyIn)) {
-					$parse[] = $block;
-					$alreadyIn[] = array($block['url'], $block['dom_id']);
-				}
-			}
-			$parse = Hash::sort($parse, '{n}.created', 'asc');
-			foreach ($parse as $block) {
+			foreach ($this->_View->viewVars['blocks'] as $block) {
 				pq($doc[sprintf('#%s', $block['dom_id'])])->html($block['content']);
 			}
 			$view->output = phpQuery::getDocument($doc->getDocumentID());

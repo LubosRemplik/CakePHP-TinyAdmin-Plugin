@@ -15,4 +15,14 @@ class BlocksController extends AppController {
 		}
 		return true;
 	}
+
+	public function find() {
+		$this->autoRender = false;
+		if (!empty($this->request->data['url'])) {
+			$url = $this->request->data['url'];
+			$data = $this->Admin->getBlocks($url);
+			return json_encode($data);
+		}
+		return true;
+	}
 }

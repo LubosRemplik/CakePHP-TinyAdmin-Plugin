@@ -6,8 +6,8 @@
 	<?php
 	echo $this->Html->meta('icon');
 
-	echo $this->Html->css('/twbs/dist/css/bootstrap-theme.min.css');
-	echo $this->Html->css('/twbs/dist/css/bootstrap.min.css');
+	echo $this->Html->css('/twbs/bootstrap/dist/css/bootstrap-theme.min.css');
+	echo $this->Html->css('/twbs/bootstrap/dist/css/bootstrap.min.css');
 
 	echo $this->fetch('meta');
 	echo $this->fetch('css');
@@ -27,7 +27,7 @@
 	</div>
 <?php 
 echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-echo $this->Html->script('/twbs/dist/js/bootstrap.min.js');
+echo $this->Html->script('/twbs/bootstrap/dist/js/bootstrap.min.js');
 echo $this->fetch('script'); 
 ?>
 </body>

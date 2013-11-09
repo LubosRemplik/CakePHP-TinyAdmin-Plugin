@@ -15,6 +15,7 @@
 
 	// Components
 	@import "bootstrap/button-groups.less";
+	@import "bootstrap/modals.less";
 
 	// Font awesome
 	@import "font-awesome/font-awesome.less";
@@ -24,6 +25,35 @@
 	top: 0px;
 	left: 0px;
 
-	padding: 5px 10px;
 	background: @gray-lighter;
+	border-radius: 0 5px 5px 0;
+	opacity: 0.8;
+
+	&.active {
+		.btn-toolbar {
+			display: block;
+		}
+	}
+
+	&.active, &:hover, &:focus {
+		opacity: 1.0;
+	}
+
+	.btn-toolbar {
+		float: left;
+		display: none;
+		padding: 5px 0px 5px 10px;
+	}
+
+	.ta-toggle {
+		line-height: 32px;
+		padding: 0px 10px;
+		&:hover, &:focus {
+			outline: none;
+		}
+	}
+
+	.modal {
+		color: @text-color;
+	}
 }

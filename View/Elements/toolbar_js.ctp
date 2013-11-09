@@ -7,55 +7,117 @@ echo $this->Html->script('/tiny_admin/ckeditor/adapters/jquery.js');
 echo $this->Html->script('/tiny_admin/js/jquery.cookie.js');
 $scriptBlock = <<<EOT
 $(function() {
-	// ckeditor instance
-	var domIDs = '%s';
-	$(domIDs).attr('contenteditable', 'true');
-	var config = {
-		allowedContent: true
-	};
-	$(domIDs).ckeditor(config);
+	$('.ta-toggle').click(function(e) {
+		e.preventDefault();
+		$('.ta-toolbar').toggleClass('active');
+		$('i', this).toggleClass('fa-chevron-left fa-chevron-right');
+		ckeditor();
+		if ($('.ta-toolbar').hasClass('active')) {
+			$.cookie('ta-toolbar', true, {expires: 60, path: '/'});
+		} else {
+			$.cookie('ta-toolbar', false, {expires: 60, path: '/'});
+		}
+	});
+	// cookie
+	if ($.cookie('ta-toolbar') == 'true') {
+		$('.ta-toolbar i')
+			.removeClass('fa-chevron-right')
+			.addClass('fa-chevron-left');
+		$('.ta-toolbar').addClass('active');
+	}
+	if ($.cookie('ta-toolbar') == 'false') {
+		$('.ta-toolbar i')
+			.removeClass('fa-chevron-left')
+			.addClass('fa-chevron-right');
+		$('.ta-toolbar').removeClass('active');
+	}
+	ckeditor();
+});
 
-	// allow save
-	for (var i in CKEDITOR.instances) {
-	    CKEDITOR.instances[i].on('change', function() {
-			$('.ta-toolbar .save')
-				.removeAttr('disabled')
-				.addClass('btn-success')
-				.removeClass('btn-default')
-				;
-			
-			$('.ta-toolbar .cancel').show();
+function ckeditor() {
+	var domIDs = '%s';
+	if ($('.ta-toolbar').hasClass('active')) {
+		// ckeditor instance
+		$(domIDs).attr('contenteditable', 'true');
+		var config = {
+			allowedContent: true
+		};
+
+		$(domIDs).ckeditor(config);
+
+		// allow save
+		for (var i in CKEDITOR.instances) {
+			CKEDITOR.instances[i].on('change', function() {
+				$('.ta-toolbar .ta-save')
+					.removeAttr('disabled')
+					.addClass('btn-success')
+					.removeClass('btn-default')
+					;
+				
+				$('.ta-toolbar .ta-cancel').show();
+			});
+		}
+
+		// variables for later use
+		var url = '%s';
+
+		// save data
+		$('.ta-toolbar .ta-save').click(function(e) {
+			e.preventDefault();
+			var data = {};
+			var i = 0;
+			$.each(CKEDITOR.instances, function(key, value ) {
+				data[i] = {
+					url: url,
+					dom_id: value.container.getId(),
+					content: value.getData()
+				}
+				i++;
+			});
+			$.ajax({
+				type: "POST",
+				url: "%s",
+				data: data 
+			}).done(function() {
+				$('.ta-toolbar .ta-save')
+					.attr('disabled', 'disabled')
+					.addClass('btn-default')
+					.removeClass('btn-success')
+					;
+				
+				$('.ta-toolbar .ta-cancel').hide();
+			});
+		}); 
+
+		// cancel action
+		$('.ta-toolbar .ta-cancel').click(function(e) {
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "%s",
+				data: {
+					url: url
+				} 
+			}).done(function(data) {
+				$.each(JSON.parse(data), function(key, value ) {
+					$('#'+value.dom_id).html(value.content);
+				});
+				$('.ta-toolbar .ta-save')
+					.attr('disabled', 'disabled')
+					.addClass('btn-default')
+					.removeClass('btn-success')
+					;
+				
+				$('.ta-toolbar .ta-cancel').hide();
+			});
+		}); 
+	} else {
+		$(domIDs).removeAttr('contenteditable');
+		$.each(CKEDITOR.instances, function(key, value ) {
+			value.destroy()
 		});
 	}
-
-	// save data
-	$('.ta-toolbar .save').click(function(e) {
-		e.preventDefault();
-		var data = {};
-		var i = 0;
-		$.each(CKEDITOR.instances, function(key, value ) {
-			data[i] = {
-				url: '%s',
-				dom_id: value.container.getId(),
-				content: value.getData()
-			}
-			i++;
-		});
-		$.ajax({
-			type: "POST",
-			url: "%s",
-			data: data 
-		}).done(function() {
-			$('.ta-toolbar .save')
-				.attr('disabled', 'disabled')
-				.addClass('btn-default')
-				.removeClass('btn-success')
-				;
-			
-			$('.ta-toolbar .cancel').hide();
-		});
-	}); 
-});
+}
 EOT;
 $domIDs = Configure::read('TinyAdmin.domIDs');
 $selectors = array();
@@ -64,10 +126,14 @@ foreach ($domIDs as $id) {
 }
 $selectors = implode(', ', $selectors);
 $url = str_replace($this->request->base, '', $this->request->here);
-$requestUrl = Router::url(array(
+$saveUrl = Router::url(array(
 	'plugin' => 'tiny_admin', 'controller' => 'blocks', 
 	'action' => 'save'
 ));
-$scriptBlock = sprintf($scriptBlock, $selectors, $url, $requestUrl);
+$findUrl = Router::url(array(
+	'plugin' => 'tiny_admin', 'controller' => 'blocks', 
+	'action' => 'find'
+));
+$scriptBlock = sprintf($scriptBlock, $selectors, $url, $saveUrl, $findUrl);
 echo $this->Html->scriptBlock($scriptBlock);
 $this->end();
