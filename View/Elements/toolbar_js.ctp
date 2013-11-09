@@ -1,9 +1,10 @@
 <?php
 $this->append('script');
-echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
+echo $this->Html->script('/tiny_admin/js/jquery-1.10.2.min.js');
+echo $this->Html->script('/twbs/bootstrap/dist/js/bootstrap.min.js');
 echo $this->Html->script('/tiny_admin/ckeditor/ckeditor.js');
 echo $this->Html->script('/tiny_admin/ckeditor/adapters/jquery.js');
-echo $this->Html->script('/tiny_admin/js/tiny_admin.js');
+echo $this->Html->script('/tiny_admin/js/jquery.cookie.js');
 $scriptBlock = <<<EOT
 $(function() {
 	// ckeditor instance
