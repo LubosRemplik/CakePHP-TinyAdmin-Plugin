@@ -41,11 +41,6 @@ $output = implode('', array(
 			'#',
 			array('class' => 'btn btn-primary')
 		),
-		$this->Html->link(
-			'File repository', 
-			'#',
-			array('class' => 'btn btn-primary')
-		),
 	))),
 	$this->Html->div('btn-group btn-group-xs', implode('', array(
 		$this->Html->link(
