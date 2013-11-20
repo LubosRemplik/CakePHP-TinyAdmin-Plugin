@@ -40,7 +40,20 @@ function ckeditor() {
 		// ckeditor instance
 		$(domIDs).attr('contenteditable', 'true');
 		var config = {
-			allowedContent: true
+			allowedContent: true,
+			language: 'en',
+			toolbar: [
+				{ items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+				{ items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+				{ items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+				{ items: [ 'TextColor', 'BGColor' ] },
+				{ items: [ 'Sourcedialog'] },
+				'/',
+				{ items: [ 'Format' ] },
+				{ items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+				{ items: [ 'Link', 'Unlink', 'Anchor' ] }, 
+				{ items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+			]
 		};
 
 		$(domIDs).ckeditor(config);
