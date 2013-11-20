@@ -170,6 +170,26 @@ $(function() {
 			$('#metadata').modal('hide');
 		});
 	});
+	$('#modal-load').click(function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: $(this).attr('href'),
+			data: $('#revisions form').serialize() 
+		}).done(function(data) {
+			$.each(JSON.parse(data), function(key, value ) {
+				$('#'+value.dom_id).html(value.content);
+			});
+			$('.ta-toolbar .ta-save')
+				.removeAttr('disabled')
+				.addClass('btn-success')
+				.removeClass('btn-default')
+				;
+			
+			$('.ta-toolbar .ta-cancel').show();
+			$('#revisions').modal('hide');
+		});
+	});
 });
 EOT;
 echo $this->Html->scriptBlock($scriptBlock);

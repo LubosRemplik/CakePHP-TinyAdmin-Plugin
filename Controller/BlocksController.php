@@ -25,4 +25,18 @@ class BlocksController extends AppController {
 		}
 		return true;
 	}
+
+	public function load() {
+		$this->autoRender = false;
+		if (
+			!empty($this->request->data['url']) &&
+			!empty($this->request->data['created'])
+		) {
+			$url = $this->request->data['url'];
+			$created = $this->request->data['created'];
+			$data = $this->Admin->getBlocks($url, $created);
+			return json_encode($data);
+		}
+		return true;
+	}
 }

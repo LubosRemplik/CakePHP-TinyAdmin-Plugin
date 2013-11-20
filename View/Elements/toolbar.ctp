@@ -30,7 +30,11 @@ $output = implode('', array(
 		$this->Html->link(
 			'Revisions', 
 			'#',
-			array('class' => 'btn btn-primary')
+			array(
+				'data-toggle' => 'modal',
+				'data-target' => '#revisions',
+				'class' => 'btn btn-primary'
+			)
 		),
 	))),
 	$this->Html->div('btn-group btn-group-xs', implode('', array(
@@ -50,5 +54,6 @@ $output = implode('', array(
 	)
 ));
 $output .= $this->element('TinyAdmin.metadata');
+$output .= $this->element('TinyAdmin.revisions');
 $output = $this->Html->div('ta-toolbar active', $output);
 echo $output;

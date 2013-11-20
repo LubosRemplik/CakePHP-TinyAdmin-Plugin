@@ -33,14 +33,18 @@ class AdminComponent extends Component {
 		}
 	}
 
-	public function getBlocks($url = null) {
+	public function getBlocks($url = null, $created = null) {
 		$controller = $this->controller;
 		if (!$url) {
 			$url = str_replace($controller->request->base, '', $controller->request->here);
 		}
+		$conditions = array('url' => $url);
+		if ($created) {
+			$conditions['created'] = $created;
+		}
 		$blocks = ClassRegistry::init('TinyAdmin.Block')->find('all', array(
 			'fields' => array('id', 'url', 'dom_id', 'content', 'created'),
-			'conditions' => array('url' => $url),
+			'conditions' => $conditions,
 			'order' => array('created' => 'desc'),
 			'contain' => false
 		));
