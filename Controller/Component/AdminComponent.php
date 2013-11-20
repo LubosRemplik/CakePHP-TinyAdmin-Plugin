@@ -22,6 +22,12 @@ class AdminComponent extends Component {
 
 		// helpers
 		$controller->helpers[] = 'TinyAdmin.Parser';
+		$controller->helpers['Form'] = array(
+			'className' => 'Twbs.TwbsForm'
+		);
+		$controller->helpers['Html'] = array(
+			'className' => 'Twbs.TwbsHtml'
+		);
 		if ($this->Session->check('Auth.User.email')) {
 			$controller->helpers[] = 'TinyAdmin.Admin';
 		}

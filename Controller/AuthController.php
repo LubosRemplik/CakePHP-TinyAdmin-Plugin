@@ -24,7 +24,7 @@ class AuthController extends AppController {
 				)
 			)
 		),
-		'Twbs.BootstrapSession',
+		'Twbs.TwbsSession',
 	);
 
 	public function login() {
@@ -34,7 +34,7 @@ class AuthController extends AppController {
 			} else {
 				$message = __d('tiny_admin', 'Email or password is incorrect');
 				$options = array('class' => 'col-md-9 col-md-offset-3');
-				$this->BootstrapSession->flash($message, 'danger', $options);
+				$this->TwbsSession->flash($message, 'danger', $options);
 			}
 		}
 		$this->set('title_for_layout', 'User login');
