@@ -36,9 +36,15 @@ $(function() {
 
 function ckeditor() {
 	var domIDs = '%s';
+	$(domIDs).bind('focus focusout', function() {
+		$(this).toggleClass('ta-active');
+	});
 	if ($('.ta-toolbar').hasClass('active')) {
 		// ckeditor instance
-		$(domIDs).attr('contenteditable', 'true');
+		$(domIDs)
+			.attr('contenteditable', 'true')
+			.addClass('ta-hover')
+			;
 		var config = {
 			allowedContent: true,
 			language: 'en',
@@ -125,7 +131,10 @@ function ckeditor() {
 			});
 		}); 
 	} else {
-		$(domIDs).removeAttr('contenteditable');
+		$(domIDs)
+			.removeAttr('contenteditable')
+			.removeClass('ta-hover')
+			;
 		$.each(CKEDITOR.instances, function(key, value ) {
 			value.destroy()
 		});
