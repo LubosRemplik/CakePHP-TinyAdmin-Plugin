@@ -13,8 +13,14 @@ class AdminComponent extends Component {
 
 	public function beforeRender(Controller $controller) {
 		// load helpers
+		// blocks
 		$blocks = $this->getBlocks();
 		$controller->set('blocks', $blocks);
+		// metadata
+		$metadata = $this->getMetadata();
+		$controller->set('metadata', $metadata);
+
+		// helpers
 		$controller->helpers[] = 'TinyAdmin.Parser';
 		if ($this->Session->check('Auth.User.email')) {
 			$controller->helpers[] = 'TinyAdmin.Admin';
@@ -45,5 +51,20 @@ class AdminComponent extends Component {
 			return $parse;
 		}
 		return false;
+	}
+
+	public function getMetadata($url = null) {
+		$controller = $this->controller;
+		if (!$url) {
+			$url = str_replace($controller->request->base, '', $controller->request->here);
+		}
+		$data = ClassRegistry::init('TinyAdmin.Metadata')->find('first', array(
+			'conditions' => array('url' => $url),
+			'contain' => false
+		));
+		if (empty($data)) {
+			return false;
+		}
+		return $data['Metadata'];
 	}
 }

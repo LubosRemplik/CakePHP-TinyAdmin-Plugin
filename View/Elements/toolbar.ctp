@@ -21,13 +21,9 @@ $output = implode('', array(
 		$this->Html->link(
 			'Meta data', 
 			'#',
-			//array(
-				//'plugin' => 'tiny_admin', 'controller' => 'meta_data', 
-				//'action' => 'edit', $this->request->here
-			//),
 			array(
 				'data-toggle' => 'modal',
-				'data-target' => '#meta-data',
+				'data-target' => '#metadata',
 				'class' => 'btn btn-primary'
 			)
 		),
@@ -58,6 +54,6 @@ $output = implode('', array(
 		array('escape' => false, 'class' => 'ta-toggle')
 	)
 ));
-$output .= $this->element('TinyAdmin.meta_data');
+$output .= $this->element('TinyAdmin.metadata');
 $output = $this->Html->div('ta-toolbar active', $output);
 echo $output;

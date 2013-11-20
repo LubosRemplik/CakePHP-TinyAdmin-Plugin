@@ -136,4 +136,19 @@ $findUrl = Router::url(array(
 ));
 $scriptBlock = sprintf($scriptBlock, $selectors, $url, $saveUrl, $findUrl);
 echo $this->Html->scriptBlock($scriptBlock);
+$scriptBlock = '';
+$scriptBlock = <<<EOT
+$(function() {
+	$('#modal-save').click(function(e) {
+		$.ajax({
+			type: "POST",
+			url: $(this).attr('href'),
+			data: $('#metadata form').serialize() 
+		}).done(function() {
+			$('#metadata').modal('hide');
+		});
+	});
+});
+EOT;
+echo $this->Html->scriptBlock($scriptBlock);
 $this->end();
