@@ -1,6 +1,7 @@
 <?php
 $this->append('script');
 echo $this->Html->script('/tiny_admin/js/jquery-1.10.2.min.js');
+echo $this->Html->script('/tiny_admin/js/jquery-ui-1.10.3.custom.min.js');
 echo $this->Html->script('/twbs/bootstrap/dist/js/bootstrap.min.js');
 echo $this->Html->script('/tiny_admin/ckeditor/ckeditor.js');
 echo $this->Html->script('/tiny_admin/ckeditor/adapters/jquery.js');
@@ -76,6 +77,9 @@ function ckeditor() {
 				$('.ta-toolbar .ta-cancel').show();
 			});
 		}
+		CKEDITOR.on('instanceReady', function(event) {
+			$("#cke_main").draggable();
+		});
 
 		// variables for later use
 		var url = '%s';
