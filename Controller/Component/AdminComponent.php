@@ -3,12 +3,39 @@
 class AdminComponent extends Component {
 
 	public $components = array(
-		'Session'
+		'Session',
+		'Cookie',
 	);
 
 	public function __construct(ComponentCollection $collection, $settings = array()) {
 		$this->controller = $collection->getController();
+		$this->components['Auth'] = Configure::read('TinyAdmin.Auth');
 		parent::__construct($collection, array_merge($this->settings, (array)$settings));
+	}
+
+	public function initialize(Controller $controller) {
+		// set cookie options
+		$this->Cookie->key = Configure::read('Security.salt');
+		$this->Cookie->httpOnly = true;
+
+		if (!$this->Auth->loggedIn() && $this->Cookie->read('remember_me')) {
+			$cookie = $this->Cookie->read('remember_me');
+
+			$user = ClassRegistry::init('TinyAdmin.User')->find('first', array(
+				'conditions' => array(
+					'User.email' => $cookie['email'],
+					'User.password' => $cookie['password']
+				)
+			));
+
+			if ($user && !$this->Auth->login($user)) {
+				// destroy session & cookie
+				$this->redirect(array(
+					'plugin' => 'tiny_admin', 'controller' => 'auth',
+					'action' => 'logout'
+				));
+			}
+		}
 	}
 
 	public function beforeRender(Controller $controller) {
@@ -28,7 +55,7 @@ class AdminComponent extends Component {
 		$controller->helpers['Html'] = array(
 			'className' => 'Twbs.TwbsHtml'
 		);
-		if ($this->Session->check('Auth.User.email')) {
+		if ($this->Auth->loggedIn()) {
 			$controller->helpers[] = 'TinyAdmin.Admin';
 		}
 	}
