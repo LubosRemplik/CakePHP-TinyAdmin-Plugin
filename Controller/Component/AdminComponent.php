@@ -18,8 +18,8 @@ class AdminComponent extends Component {
 		$this->Cookie->key = Configure::read('Security.salt');
 		$this->Cookie->httpOnly = true;
 
-		if (!$this->Auth->loggedIn() && $this->Cookie->read('remember_me')) {
-			$cookie = $this->Cookie->read('remember_me');
+		$cookie = $this->Cookie->read('remember_me');
+		if (!$this->Auth->loggedIn() && !empty($cookie['email']) && !empty($cookie['password'])) {
 
 			$user = ClassRegistry::init('TinyAdmin.User')->find('first', array(
 				'conditions' => array(
