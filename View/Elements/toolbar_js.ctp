@@ -1,11 +1,8 @@
 <?php
 $this->append('script');
-echo $this->Html->script('/tiny_admin/js/jquery-1.10.2.min.js');
-echo $this->Html->script('/tiny_admin/js/jquery-ui-1.10.3.custom.min.js');
-echo $this->Html->script('/twbs/bootstrap/dist/js/bootstrap.min.js');
+echo $this->Html->script('/tiny_admin/js/tiny_admin.min.js');
 echo $this->Html->script('/tiny_admin/ckeditor/ckeditor.js');
 echo $this->Html->script('/tiny_admin/ckeditor/adapters/jquery.js');
-echo $this->Html->script('/tiny_admin/js/jquery.cookie.js');
 $scriptBlock = <<<EOT
 $(function() {
 	$('.ta-toggle').click(function(e) {
