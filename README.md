@@ -47,15 +47,39 @@ into `APP/Plugin/Twbs`, both with recursive option
 1. Make sure you have domID in your view/layout file which is set in TinyAdmin config.php file
 1. Set user in TinyAdmin config.php file or use console to create new one
 
-		Console/cake TinyAdmin.user create lubos@lubos.me secretPassword
+		Console/cake TinyAdmin.user create lubos@example.com secretPassword
 
 1. Vision http://example.com/tinyadmin and use your login details (see demo below)
 1. Enjoy
 
 ## Sample & Demo
 
-TBC
+To see how this work I created demo on [tinyadmin.lubos.me](http://tinyadmin.lubos.me). You can login on 
+[**tinyadmin.lubos.me/tinyadmin**](http://tinyadmin.lubos.me/tinyadmin) with email: **lubos@example.com** and password: **tinyadmin**
+
+After login you can edit [http://tinyadmin.lubos.me/pages/demo1](http://tinyadmin.lubos.me/pages/demo1) or [http://tinyadmin.lubos.me/pages/demo2](http://tinyadmin.lubos.me/pages/demo2)
+by clicking inside the yellow box. You can browser revision and edit meta tags from toolbar.
+
+You can install sample by cloning [CakePHP TiyAdmin Plugin sample](https://github.com/LubosRemplik/CakePHP-TinyAdmin-Plugin-sample) and using app/Config/sql/dump.sql file.
+
+## Reporting issues
+
+If you have a problem with TinyAdmin please open an issue on [GitHub](https://github.com/LubosRemplik/CakePHP-TinyAdmin-Plugin/issues).
+
+## Contributing
+
+If you'd like to contribute to TinyAdmin 
+you can [fork](https://help.github.com/articles/fork-a-repo)
+the project, add features, and send [pull
+requests](https://help.github.com/articles/using-pull-requests) or open
+[issues](https://github.com/LubosRemplik/CakePHP-TinyAdmin-Plugin/issues).
 
 ## Reference
 
-TBC
+Below is what is used in TinyAdmin plugin
+
+[CakePHP](http://cakephp.org/)  
+[CKEditor](http://ckeditor.com/)  
+[phpquery](https://code.google.com/p/phpquery/)  
+[Twitter bootstrap](getbootstrap.com)  
+[Font awesome](fontawesome.io)  
